@@ -1,44 +1,55 @@
 import { useState } from "react";
-import { Button, Text, View, StyleSheet } from "react-native";
-import ListaProdutos from "./componentes/adaptadores/ListaProdutos"
+import { Button, StyleSheet, Text, View } from "react-native";
+import ListaProdutos from "./componentes/adaptadores/ListaProdutos";
+import { useEffect } from "react";
+import CadastroProduto from "./componentes/adaptadores/CadastroProdutos"
+import axios from "axios";
 
-const produtos = [
-  {id: 1, nome: "Coca-cola", preco: 5.5},
-  {id: 2, nome: "Pepsi", preco: 5.5},
-  {id: 3, nome: "Fanta", preco: 5.5},
-  {id: 4, nome: "Guaraná", preco: 5.5}
-]
+
 
 export default function Index() {
-  let [contador, setContador] = useState(0);
+  let [contador,setContador] = useState(0);
+  let [produtos, setProdutos] = useState([]);
 
-  return (
-    <View
-      style={estilo.container}
-    >
-      <ListaProdutos produtos={produtos}></ListaProdutos>
-      <Button 
-        title={contador.toString()} 
-        onPress={()=>setContador(contador += 1)}
-        color={'#3399ff'}
-      ></Button>
-    </View>
-  );
+    useEffect(()=>{
+      carregarProdutos()
+    },[])
+
+
+function carregarProdutos(){
+  axios.get('https://app-api-tapwm.onrender.com/api/produtos')
+  .then((resp)=>{
+    setProdutos(resp.data);
+  })
 }
 
-  const estilo = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "flex-start",
-      backgroundColor: "#d9e8ed",
-      padding: 20,
-    },
-    titulo:{
-      color:"#000000",
-      fontFamily: 'helvetica',
-      fontSize: 30,
-      fontWeight: "bold",  
-      textAlign: "left",
-    }
-  })
+  return (
+    <View style={estilo.container}>
+      <ListaProdutos produtos={produtos}></ListaProdutos>    
+      <Button title={contador.toString()}
+       onPress={()=>{Clicarbotao()}}></Button>
+       <CadastroProduto/>
+
+    </View>
+    );
+  function Clicarbotao(){
+    setContador(contador+1)
+  };
+}
+
+const estilo = StyleSheet.create({
+  container:{
+    flex: 1,
+  },
+  Text: {
+    color:"#ffffff",
+    fontSize: 20,
+  },
+  titulo:{
+    color: "#8B0000",
+    fontSize: 30,
+    textAlign: "left",
+    fontWeight: "bold"
+  },
+  
+});
