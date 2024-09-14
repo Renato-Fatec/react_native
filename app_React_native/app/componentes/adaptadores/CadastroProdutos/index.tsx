@@ -13,7 +13,7 @@ let [foto, setFoto] = useState('')
 
     return(
         <View>
-            <Text>Home:</Text>
+            <Text>Nome:</Text>
             <TextInput onChangeText={setNome} value={nome}/>
             <Text>Descrição:</Text>
             <TextInput onChangeText={setDescricao} value={descricao}/>

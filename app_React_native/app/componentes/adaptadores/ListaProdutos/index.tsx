@@ -4,15 +4,18 @@ import Style from "@/app/Styles/Default";
 import Produtos from "@/app/Models/Produto"
 import React from "react";
 
-function ListaProdutos({produtos}:
-            {produtos: Produtos[]}){
+interface PropListaProd{
+    produtos: Produtos[]
+    aoAtualizar?:Function
+
+}
+const ListaProdutos:React.FC<PropListaProd>=({produtos,aoAtualizar})=>{
     return (
     <ScrollView>
         <View style= {Style.container}>
             {produtos.map((p)=> 
-                <ItemProduto produto={p}  key={p.id}>
+                <ItemProduto produto={p} key={p.id} aoExcluir={()=>{aoAtualizar?.call(null)}}>
                 </ItemProduto> )}
-        
         </View>
     </ScrollView>
     )
