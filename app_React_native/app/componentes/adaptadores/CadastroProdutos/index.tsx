@@ -9,12 +9,16 @@ const CadastroProduto = ()=>{
 let [preco, setPreco] = useState(0)
 let [nome, setNome] = useState('')
 let [descricao, setDescricao] = useState ('')
+let [foto, setFoto] = useState('')
+
     return(
         <View>
             <Text>Home:</Text>
             <TextInput onChangeText={setNome} value={nome}/>
             <Text>Descrição:</Text>
             <TextInput onChangeText={setDescricao} value={descricao}/>
+            <Text>Foto:</Text>
+            <TextInput onChangeText={setFoto} value={foto}/>
             <Text>Preço:</Text>
             <TextInput onChangeText={(v)=> setPreco(
                 isNaN(parseFloat(v))? 0: parseFloat(v))}
@@ -27,6 +31,7 @@ let [descricao, setDescricao] = useState ('')
             nome: nome,
             descricao: descricao,
             preco: preco,
+            foto: foto,
         } as Produto;
         let api = 'https://api-docker-2t8m.onrender.com/api/produtos';
         axios.post(api,produto)
